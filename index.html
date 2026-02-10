@@ -4,29 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReSolution Flow | Premium</title>
-    
+   
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0062ff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1162/1162456.png">
-
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
     <style>
         :root {
             --primary: #0062ff;
             --primary-hover: #0052d6;
+            --secondary: #6366f1;
             --bg: #f8fafc;
             --card: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
             --input-bg: #f1f5f9;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
             --shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
             --radius-lg: 24px;
             --radius-md: 16px;
+            --radius-sm: 8px;
         }
-
         body.dark-mode {
             --bg: #020617;
             --card: #0f172a;
@@ -36,15 +40,13 @@
             --input-bg: #1e293b;
             --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
         }
-
         * { box-sizing: border-box; transition: all 0.2s ease; }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); margin: 0; color: var(--text-main); 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg); margin: 0; color: var(--text-main);
             min-height: 100vh; overflow-x: hidden;
         }
         .hidden { display: none !important; }
-
         /* --- NAVBAR --- */
         .nav-wrapper { padding: 16px 5%; position: sticky; top: 0; z-index: 1000; }
         .nav {
@@ -53,60 +55,68 @@
             display: flex; justify-content: space-between; align-items: center;
             box-shadow: var(--shadow);
         }
-        .logo { font-weight: 800; font-size: 1.25rem; color: var(--primary); }
-
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .logo i { font-size: 1.4rem; }
         .user-trigger { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
         .user-photo { width: 36px; height: 36px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; overflow: hidden; }
         .user-photo img { width: 100%; height: 100%; object-fit: cover; }
-
         /* --- DATE SELECTOR (CENTRALIZADO) --- */
         .date-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 30px 0; }
         .date-btn {
             background: var(--card); border: 1px solid var(--border); color: var(--text-main);
-            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; box-shadow: var(--shadow);
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: var(--shadow); font-size: 1.2rem;
         }
+        .date-btn:hover { background: var(--input-bg); }
         .date-display {
             background: transparent; border: none; font-weight: 700; font-size: 1.1rem;
             color: var(--text-main); text-align: center; width: 160px; outline: none; cursor: pointer;
         }
-
         /* --- DASHBOARD --- */
         .main { max-width: 700px; margin: 0 auto; padding: 0 20px 60px; }
-        .stats-card { 
+        .stats-card {
             background: var(--card); border-radius: var(--radius-lg); padding: 30px;
             border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 30px;
         }
         .progress-bar { background: var(--input-bg); border-radius: 100px; height: 12px; overflow: hidden; margin-top: 15px; }
-        .progress-fill { background: var(--primary); height: 100%; border-radius: 100px; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-
+        .progress-fill { background: linear-gradient(to right, var(--primary), var(--secondary)); height: 100%; border-radius: 100px; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn-main {
             background: var(--primary); color: white; border: none; padding: 14px 24px;
             border-radius: var(--radius-md); font-weight: 700; cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 98, 255, 0.3);
+            box-shadow: 0 4px 14px rgba(0, 98, 255, 0.3); transition: transform 0.1s;
         }
-
+        .btn-main:hover { transform: translateY(-2px); background: var(--primary-hover); }
+        .btn-secondary { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border); }
         /* --- LISTA --- */
         .tasks-wrapper { background: var(--card); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
-        .task-row { display: flex; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); }
+        .task-row { display: flex; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); cursor: grab; transition: background 0.2s; }
+        .task-row:hover { background: var(--input-bg); }
         .task-row:last-child { border-bottom: none; }
-        .task-text { flex: 1; font-weight: 500; }
+        .task-text { flex: 1; font-weight: 500; display: flex; align-items: center; gap: 8px; }
         .task-done { text-decoration: line-through; opacity: 0.4; }
-
+        .priority-tag { padding: 4px 8px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; }
+        .priority-low { background: #d1fae5; color: var(--success); }
+        .priority-medium { background: #fef3c7; color: var(--warning); }
+        .priority-high { background: #fee2e2; color: var(--danger); }
         /* --- MODAIS --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--card); padding: 30px; border-radius: var(--radius-lg); width: 100%; max-width: 400px; border: 1px solid var(--border); }
-        
-        input[type="text"] { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); margin-bottom: 15px; font-size: 1rem; }
-
-        .dropdown { position: absolute; top: 55px; right: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); width: 180px; box-shadow: var(--shadow); overflow: hidden; z-index: 10; }
-        .dropdown div { padding: 12px 20px; cursor: pointer; font-size: 0.9rem; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+        .modal.show { opacity: 1; }
+        .modal-content { background: var(--card); padding: 30px; border-radius: var(--radius-lg); width: 100%; max-width: 400px; border: 1px solid var(--border); transform: scale(0.95); transition: transform 0.3s; }
+        .modal.show .modal-content { transform: scale(1); }
+       
+        input[type="text"], select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); margin-bottom: 15px; font-size: 1rem; }
+        select { appearance: none; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iNyIgdmlld0JveD0iMCAwIDEyIDciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNDEgMUw2IDUuNTg5TDEwLjU5IDFMMTIgMkw2IDhMMCAyTDEuNDEgMVoiIGZpbGw9IiM5NDk1QTkiLz48L3N2Zz4='); background-repeat: no-repeat; background-position: right 16px center; }
+        .dropdown { position: absolute; top: 55px; right: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); width: 180px; box-shadow: var(--shadow); overflow: hidden; z-index: 10; transform: scale(0.95); transition: transform 0.2s, opacity 0.2s; opacity: 0; }
+        .dropdown.show { transform: scale(1); opacity: 1; }
+        .dropdown div { padding: 12px 20px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
         .dropdown div:hover { background: var(--input-bg); }
+        /* --- ANIMAÇÕES --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.3s ease; }
     </style>
 </head>
 <body onclick="closeDropdown()">
-
-    <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh;">
+    <div id="auth-screen" class="fade-in" style="display:flex; justify-content:center; align-items:center; height:100vh;">
         <div style="background:var(--card); padding:40px; border-radius:32px; box-shadow:var(--shadow); width:90%; max-width:400px; text-align:center; border: 1px solid var(--border);">
             <h1 style="margin:0; font-weight:800; color: var(--primary);">ReSolution</h1>
             <p style="color:var(--text-muted); margin-bottom:30px;">Flow de produtividade</p>
@@ -114,50 +124,54 @@
             <button class="btn-main" onclick="handleRegister()" style="width:100%">Entrar</button>
         </div>
     </div>
-
     <div id="app-content" class="hidden">
         <div class="nav-wrapper">
             <nav class="nav">
-                <div class="logo">ReSolution</div>
+                <div class="logo"><i class="fa-solid fa-rocket"></i> ReSolution</div>
                 <div class="user-trigger" onclick="toggleDropdown(event)">
                     <span id="user-name-display" style="font-weight:600;">Usuário</span>
                     <div class="user-photo" id="user-photo-nav">U</div>
                     <div id="user-dropdown" class="dropdown hidden">
-                        <div onclick="openProfileModal()">👤 Perfil</div>
-                        <div onclick="toggleDarkMode()">🌓 Tema</div>
-                        <div onclick="resetApp()" style="color:#f43f5e">🗑️ Resetar</div>
+                        <div onclick="openProfileModal()"><i class="fa-solid fa-user"></i> Perfil</div>
+                        <div onclick="toggleDarkMode()"><i class="fa-solid fa-moon"></i> Tema</div>
+                        <div onclick="openStatsModal()"><i class="fa-solid fa-chart-bar"></i> Estatísticas</div>
+                        <div onclick="resetApp()" style="color:var(--danger)"><i class="fa-solid fa-trash"></i> Resetar</div>
                     </div>
                 </div>
             </nav>
         </div>
-
         <div class="date-container">
-            <button class="date-btn" onclick="changeDay(-1)">←</button>
+            <button class="date-btn" onclick="changeDay(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <input type="date" id="current-day-selector" class="date-display" onchange="updateDashboard()">
-            <button class="date-btn" onclick="changeDay(1)">→</button>
+            <button class="date-btn" onclick="changeDay(1)"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
-
         <main class="main">
             <div class="stats-card">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                     <div id="progress-percent" style="font-size:2.2rem; font-weight:800;">0%</div>
                     <button class="btn-main" onclick="openObjModal()">+ Meta</button>
                 </div>
                 <div class="progress-bar"><div id="fill" class="progress-fill"></div></div>
+                <div id="motivational-quote" style="text-align:center; margin-top:20px; color:var(--text-muted); font-style:italic;"></div>
             </div>
             <div class="tasks-wrapper" id="obj-list"></div>
         </main>
     </div>
-
     <div id="obj-modal" class="modal hidden">
         <div class="modal-content">
-            <h3>Nova Meta</h3>
+            <h3 id="obj-modal-title">Nova Meta</h3>
             <input type="text" id="new-obj-desc" placeholder="O que vamos fazer?">
+            <select id="new-obj-priority">
+                <option value="">Prioridade (opcional)</option>
+                <option value="low">Baixa</option>
+                <option value="medium">Média</option>
+                <option value="high">Alta</option>
+            </select>
             <button class="btn-main" onclick="saveObjective()" style="width:100%">Salvar</button>
             <button onclick="closeModals()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer; color:var(--text-muted);">Cancelar</button>
+            <input type="hidden" id="edit-obj-index" value="-1">
         </div>
     </div>
-
     <div id="profile-modal" class="modal hidden">
         <div class="modal-content" style="text-align:center;">
             <h3>Perfil</h3>
@@ -170,24 +184,35 @@
             <button onclick="closeModals()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer;">Fechar</button>
         </div>
     </div>
-
+    <div id="stats-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Estatísticas</h3>
+            <div id="stats-content" style="color:var(--text-muted);"></div>
+            <button onclick="closeModals()" style="width:100%; background:none; border:none; margin-top:20px; cursor:pointer;">Fechar</button>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <script>
         // CONFIGURAÇÕES INICIAIS
-        const DB_KEY = 'res_flow_v6';
+        const DB_KEY = 'res_flow_v7'; // Atualizado para v7 para resetar dados antigos se necessário
         let userData = JSON.parse(localStorage.getItem(DB_KEY)) || null;
-
+        const quotes = [
+            "O sucesso é a soma de pequenos esforços repetidos dia após dia.",
+            "Não espere por oportunidades, crie-as.",
+            "A disciplina é a ponte entre metas e realizações.",
+            "Comece onde você está, use o que você tem, faça o que você pode.",
+            "O único limite é aquele que você impõe a si mesmo."
+        ];
         window.onload = () => {
             if (localStorage.getItem('res_dark') === 'true') document.body.classList.add('dark-mode');
             const dateInput = document.getElementById('current-day-selector');
             dateInput.valueAsDate = new Date();
-            
+           
             if (userData && userData.name) {
                 showApp();
             }
+            updateMotivationalQuote();
         };
-
         // AUTH
         function handleRegister() {
             const name = document.getElementById('reg-user').value.trim();
@@ -196,13 +221,11 @@
             save();
             showApp();
         }
-
         function showApp() {
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('app-content').classList.remove('hidden');
             updateDashboard();
         }
-
         // CORE
         function updateDashboard() {
             if (!userData) return;
@@ -210,56 +233,111 @@
             document.getElementById('user-name-display').innerText = userData.name;
             const photoNav = document.getElementById('user-photo-nav');
             photoNav.innerHTML = userData.photo ? `<img src="${userData.photo}">` : userData.name.charAt(0).toUpperCase();
-
             const daily = userData.objectives.filter(o => o.date === date);
             renderList(daily);
-
             const perc = daily.length > 0 ? Math.round((daily.filter(o => o.done).length / daily.length) * 100) : 0;
             document.getElementById('fill').style.width = perc + '%';
             document.getElementById('progress-percent').innerText = perc + '%';
-            
+           
             if (perc === 100 && daily.length > 0) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#0062ff', '#6366f1'] });
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#0062ff', '#6366f1', '#10b981'] });
             }
         }
-
         function renderList(list) {
             const container = document.getElementById('obj-list');
-            container.innerHTML = list.length ? '' : '<div style="padding:40px; text-align:center; color:var(--text-muted);">Nada planejado.</div>';
-            
+            container.innerHTML = list.length ? '' : '<div style="padding:40px; text-align:center; color:var(--text-muted);">Nada planejado. Adicione uma meta!</div>';
+           
             list.forEach(o => {
-                const realIdx = userData.objectives.findIndex(item => item === o);
+                const realIdx = userData.objectives.findIndex(item => item.desc === o.desc && item.date === o.date); // Melhorar identificação
                 const row = document.createElement('div');
                 row.className = 'task-row';
+                row.draggable = true;
+                row.dataset.index = realIdx;
                 row.innerHTML = `
                     <input type="checkbox" ${o.done ? 'checked' : ''} onchange="toggle(${realIdx})" style="width:22px; height:22px; margin-right:15px; accent-color:var(--primary); cursor:pointer;">
-                    <div class="task-text ${o.done ? 'task-done' : ''}">${o.desc}</div>
-                    <span onclick="del(${realIdx})" style="color:#f43f5e; cursor:pointer; font-weight:bold; margin-left:10px;">✕</span>
+                    <div class="task-text ${o.done ? 'task-done' : ''}">
+                        ${o.priority ? `<span class="priority-tag priority-${o.priority}">${o.priority.charAt(0).toUpperCase()}</span>` : ''}
+                        ${o.desc}
+                    </div>
+                    <span onclick="editObjective(${realIdx})" style="color:var(--primary); cursor:pointer; margin-left:10px;"><i class="fa-solid fa-edit"></i></span>
+                    <span onclick="del(${realIdx})" style="color:var(--danger); cursor:pointer; margin-left:10px;"><i class="fa-solid fa-trash"></i></span>
                 `;
                 container.appendChild(row);
             });
+            initDragAndDrop(container);
         }
-
+        function initDragAndDrop(container) {
+            let draggedItem = null;
+            container.addEventListener('dragstart', e => {
+                draggedItem = e.target;
+                setTimeout(() => draggedItem.classList.add('hidden'), 0);
+            });
+            container.addEventListener('dragend', e => {
+                setTimeout(() => draggedItem.classList.remove('hidden'), 0);
+            });
+            container.addEventListener('dragover', e => e.preventDefault());
+            container.addEventListener('dragenter', e => {
+                if (e.target.classList.contains('task-row')) {
+                    e.target.style.borderTop = '2px solid var(--primary)';
+                }
+            });
+            container.addEventListener('dragleave', e => {
+                if (e.target.classList.contains('task-row')) {
+                    e.target.style.borderTop = '';
+                }
+            });
+            container.addEventListener('drop', e => {
+                e.preventDefault();
+                if (e.target.classList.contains('task-row')) {
+                    e.target.style.borderTop = '';
+                    const fromIdx = parseInt(draggedItem.dataset.index);
+                    const toIdx = parseInt(e.target.dataset.index);
+                    if (fromIdx !== toIdx) {
+                        const [moved] = userData.objectives.splice(fromIdx, 1);
+                        userData.objectives.splice(toIdx, 0, moved);
+                        save();
+                        updateDashboard();
+                    }
+                }
+            });
+        }
         // AÇÕES
         function saveObjective() {
             const desc = document.getElementById('new-obj-desc').value.trim();
+            const priority = document.getElementById('new-obj-priority').value;
             const date = document.getElementById('current-day-selector').value;
+            const editIdx = parseInt(document.getElementById('edit-obj-index').value);
             if (!desc) return;
-            userData.objectives.push({ desc, date, done: false });
+            if (editIdx >= 0) {
+                userData.objectives[editIdx] = { desc, date, done: userData.objectives[editIdx].done, priority };
+            } else {
+                userData.objectives.push({ desc, date, done: false, priority });
+            }
             save(); updateDashboard(); closeModals();
-            document.getElementById('new-obj-desc').value = '';
+            resetObjModal();
         }
-
+        function editObjective(i) {
+            const obj = userData.objectives[i];
+            document.getElementById('obj-modal-title').innerText = 'Editar Meta';
+            document.getElementById('new-obj-desc').value = obj.desc;
+            document.getElementById('new-obj-priority').value = obj.priority || '';
+            document.getElementById('edit-obj-index').value = i;
+            openObjModal();
+        }
+        function resetObjModal() {
+            document.getElementById('obj-modal-title').innerText = 'Nova Meta';
+            document.getElementById('new-obj-desc').value = '';
+            document.getElementById('new-obj-priority').value = '';
+            document.getElementById('edit-obj-index').value = -1;
+        }
         function toggle(i) {
             userData.objectives[i].done = !userData.objectives[i].done;
             if (userData.objectives[i].done && "vibrate" in navigator) navigator.vibrate(40);
             save(); updateDashboard();
         }
-
         function del(i) {
             if(confirm("Remover meta?")) { userData.objectives.splice(i, 1); save(); updateDashboard(); }
         }
-
         function saveProfile() {
             const name = document.getElementById('edit-name').value.trim();
             if (name) {
@@ -267,7 +345,6 @@
                 save(); updateDashboard(); closeModals();
             }
         }
-
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -279,33 +356,80 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
+        function openStatsModal() {
+            const statsContent = document.getElementById('stats-content');
+            const totalObjs = userData.objectives.length;
+            const completed = userData.objectives.filter(o => o.done).length;
+            const perc = totalObjs > 0 ? Math.round((completed / totalObjs) * 100) : 0;
+            const dates = [...new Set(userData.objectives.map(o => o.date))].sort();
+            let streak = 0;
+            let maxStreak = 0;
+            for (let i = 1; i < dates.length; i++) {
+                const prev = new Date(dates[i-1]);
+                const curr = new Date(dates[i]);
+                if ((curr - prev) / (1000 * 60 * 60 * 24) === 1) {
+                    streak++;
+                    maxStreak = Math.max(maxStreak, streak);
+                } else {
+                    streak = 0;
+                }
+            }
+            statsContent.innerHTML = `
+                <p><strong>Metas Totais:</strong> ${totalObjs}</p>
+                <p><strong>Completadas:</strong> ${completed} (${perc}%)</p>
+                <p><strong>Maior Sequência de Dias:</strong> ${maxStreak + 1} dias</p>
+            `;
+            document.getElementById('stats-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('stats-modal').classList.add('show'), 10);
+        }
+        function updateMotivationalQuote() {
+            const quoteEl = document.getElementById('motivational-quote');
+            quoteEl.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+        }
         // AUXILIARES
         function save() { localStorage.setItem(DB_KEY, JSON.stringify(userData)); }
-        
+       
         function changeDay(d) {
             const s = document.getElementById('current-day-selector');
             const dt = new Date(s.value + 'T00:00:00');
             dt.setDate(dt.getDate() + d);
             s.valueAsDate = dt;
             updateDashboard();
+            updateMotivationalQuote();
         }
-
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('res_dark', isDark);
         }
-
         function resetApp() { if(confirm("Apagar todos os dados permanentemente?")) { localStorage.clear(); location.reload(); } }
-        function openObjModal() { document.getElementById('obj-modal').classList.remove('hidden'); }
-        function openProfileModal() { 
-            document.getElementById('edit-name').value = userData.name;
-            document.getElementById('profile-modal').classList.remove('hidden'); 
+        function openObjModal() { 
+            document.getElementById('obj-modal').classList.remove('hidden'); 
+            setTimeout(() => document.getElementById('obj-modal').classList.add('show'), 10);
         }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
-        function toggleDropdown(e) { e.stopPropagation(); document.getElementById('user-dropdown').classList.toggle('hidden'); }
-        function closeDropdown() { document.getElementById('user-dropdown').classList.add('hidden'); }
-
+        function openProfileModal() {
+            document.getElementById('edit-name').value = userData.name;
+            document.getElementById('modal-photo-preview').innerHTML = userData.photo ? `<img src="${userData.photo}" style="width:100%; height:100%; object-fit:cover">` : 'FOTO';
+            document.getElementById('profile-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('profile-modal').classList.add('show'), 10);
+        }
+        function closeModals() { 
+            document.querySelectorAll('.modal').forEach(m => { 
+                m.classList.remove('show'); 
+                setTimeout(() => m.classList.add('hidden'), 300); 
+            }); 
+            resetObjModal();
+        }
+        function toggleDropdown(e) { 
+            e.stopPropagation(); 
+            const dd = document.getElementById('user-dropdown');
+            dd.classList.toggle('hidden'); 
+            dd.classList.toggle('show'); 
+        }
+        function closeDropdown() { 
+            const dd = document.getElementById('user-dropdown');
+            dd.classList.remove('show'); 
+            setTimeout(() => dd.classList.add('hidden'), 200); 
+        }
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(() => console.log("SW Registered"));
     </script>
 </body>
