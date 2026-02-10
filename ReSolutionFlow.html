@@ -4,260 +4,237 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReSolution Flow | Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0062ff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1162/1162456.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #0062ff;
-            --bg: #f4f7fa;
-            --card-bg: #ffffff;
-            --text: #0f172a;
-            --text-secondary: #64748b;
+            --primary-hover: #0052d6;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
             --border: #e2e8f0;
             --input-bg: #f1f5f9;
-            --success: #10b981;
-            --error: #f43f5e;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
 
         body.dark-mode {
-            --primary: #6366f1;
             --bg: #020617;
-            --card-bg: #0f172a;
-            --text: #f8fafc;
-            --text-secondary: #94a3b8;
+            --card: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --border: #1e293b;
             --input-bg: #1e293b;
-            --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
         }
 
-        * { box-sizing: border-box; transition: all 0.2s ease; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            color: var(--text-main); 
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
         .hidden { display: none !important; }
 
-        /* --- INPUTS E BOTÕES --- */
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 14px 18px;
-            margin: 10px 0;
-            border: 2px solid transparent;
-            border-radius: 16px;
-            background: var(--input-bg);
-            color: var(--text);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        input:focus {
-            border-color: var(--primary);
-            background: var(--card-bg);
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--primary), #4f46e5);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 98, 255, 0.2);
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 98, 255, 0.3); }
-        button:active { transform: scale(0.98); }
-
         /* --- NAVBAR --- */
-        .navbar-container { padding: 15px 5% 5px; position: sticky; top: 0; z-index: 1000; }
-        .navbar {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
+        .nav-wrapper { padding: 16px 5%; position: sticky; top: 0; z-index: 1000; }
+        .nav {
+            background: rgba(var(--card), 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 10px 20px;
+            border-radius: var(--radius-lg);
+            padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow);
         }
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--primary); letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1.25rem; background: linear-gradient(90deg, #0062ff, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .user-section { display: flex; align-items: center; gap: 10px; cursor: pointer; position: relative; }
-        .user-photo { 
-            width: 38px; height: 38px; border-radius: 12px; background: var(--primary); 
-            color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; overflow: hidden;
-        }
+        .user-trigger { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 4px 4px 12px; border-radius: 50px; border: 1px solid transparent; }
+        .user-trigger:hover { background: var(--input-bg); border-color: var(--border); }
+        .user-photo { width: 36px; height: 36px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; overflow: hidden; }
         .user-photo img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- SELETOR DE DATA (CENTRALIZADO) --- */
-        .date-navigator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 25px 0;
-        }
+        /* --- DATE SELECTOR (Centralized) --- */
+        .date-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 30px 0; }
         .date-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            flex-shrink: 0;
+            background: var(--card); border: 1px solid var(--border); color: var(--text-main);
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; box-shadow: var(--shadow); font-size: 0.9rem;
         }
-        .date-input {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-weight: 800;
-            font-size: 1.1rem;
-            text-align: center;
-            width: 180px;
-            outline: none;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
+        .date-btn:hover { transform: scale(1.05); background: var(--primary); color: white; border-color: var(--primary); }
+        .date-display {
+            background: var(--card); border: 1px solid var(--border); border-radius: 50px;
+            padding: 10px 24px; font-weight: 700; font-size: 1rem; color: var(--text-main);
+            display: flex; align-items: center; box-shadow: var(--shadow); cursor: pointer;
         }
+        .date-input-hidden { border: none; background: transparent; color: inherit; font: inherit; outline: none; text-align: center; cursor: pointer; }
 
-        /* --- DASHBOARD --- */
-        .main-container { max-width: 800px; margin: 0 auto; padding: 0 20px 40px; }
-        .summary-card { 
-            background: var(--card-bg); border-radius: 24px; padding: 25px;
-            border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 25px;
+        /* --- MAIN DASHBOARD --- */
+        .main { max-width: 700px; margin: 0 auto; padding: 0 20px 60px; }
+        .stats-card { 
+            background: var(--card); border-radius: var(--radius-lg); padding: 30px;
+            border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 30px;
+            position: relative; overflow: hidden;
         }
-        .progress-bar { background: var(--input-bg); border-radius: 100px; height: 10px; margin-top: 15px; overflow: hidden; }
-        .progress-fill { background: var(--primary); height: 100%; border-radius: 100px; transition: width 0.5s ease; }
+        .stats-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        
+        .progress-container { margin-top: 20px; }
+        .progress-bar { background: var(--input-bg); border-radius: 100px; height: 12px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--primary), #6366f1); height: 100%; border-radius: 100px; }
 
-        .spreadsheet-container { 
-            background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); 
-            box-shadow: var(--shadow); overflow: hidden;
+        .btn-main {
+            background: var(--primary); color: white; border: none; padding: 14px 28px;
+            border-radius: var(--radius-md); font-weight: 700; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 98, 255, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        table { width: 100%; border-collapse: collapse; }
-        th { padding: 15px 24px; text-align: left; font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; border-bottom: 1px solid var(--border); }
-        td { padding: 18px 24px; border-bottom: 1px solid var(--border); }
+        .btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-        /* --- DROPDOWN & MODAIS --- */
-        .dropdown-menu { 
-            position: absolute; top: 50px; right: 0; background: var(--card-bg); 
-            border-radius: 16px; width: 200px; border: 1px solid var(--border);
-            box-shadow: var(--shadow); overflow: hidden; z-index: 10;
+        /* --- LIST TABLE --- */
+        .tasks-wrapper { background: var(--card); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+        .task-row { 
+            display: flex; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border);
+            animation: slideIn 0.3s ease-out;
         }
-        .dropdown-menu div { padding: 12px 20px; font-size: 0.9rem; cursor: pointer; border-bottom: 1px solid var(--border); }
-        .dropdown-menu div:last-child { border-bottom: none; }
-        .dropdown-menu div:hover { background: var(--input-bg); }
-
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; box-shadow: var(--shadow); }
-
-        .profile-upload-box {
-            width: 100px; height: 100px; border-radius: 20px; background: var(--input-bg);
-            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; overflow: hidden; border: 2px dashed var(--primary);
+        .task-row:last-child { border-bottom: none; }
+        .task-row:hover { background: rgba(0, 98, 255, 0.02); }
+        
+        .check-container { margin-right: 18px; position: relative; width: 24px; height: 24px; }
+        input[type="checkbox"] { 
+            appearance: none; width: 24px; height: 24px; border: 2px solid var(--border); 
+            border-radius: 8px; cursor: pointer; position: relative;
         }
+        input[type="checkbox"]:checked { background: var(--primary); border-color: var(--primary); }
+        input[type="checkbox"]:checked::after { content: '✓'; position: absolute; color: white; font-size: 14px; left: 5px; top: 1px; }
+
+        .task-text { flex: 1; font-weight: 500; font-size: 1rem; }
+        .task-done { text-decoration: line-through; opacity: 0.4; }
+        .btn-delete { color: #f43f5e; background: none; border: none; cursor: pointer; font-size: 1.2rem; padding: 5px; opacity: 0; }
+        .task-row:hover .btn-delete { opacity: 1; }
+
+        /* --- MODAIS --- */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: var(--card); padding: 32px; border-radius: var(--radius-lg); width: 100%; max-width: 440px; border: 1px solid var(--border); animation: modalUp 0.3s ease-out; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        /* Menu */
+        .dropdown { position: absolute; top: 60px; right: 0; background: var(--card); border-radius: var(--radius-md); width: 200px; border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+        .dropdown div { padding: 14px 20px; font-size: 0.95rem; cursor: pointer; }
+        .dropdown div:hover { background: var(--input-bg); color: var(--primary); }
+
+        input[type="text"] { width: 100%; padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 20px; }
     </style>
 </head>
 <body onclick="closeDropdown()">
 
-    <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh;">
-        <div style="background:var(--card-bg); padding:40px; border-radius:30px; box-shadow:var(--shadow); width:90%; max-width:400px; text-align:center; border: 1px solid var(--border);">
-            <h1 style="color:var(--primary); margin:0; font-weight:800; font-size: 2rem;">ReSolution</h1>
-            <p style="color:var(--text-secondary); margin-bottom:30px;">Flow de produtividade</p>
-            <input type="text" id="reg-user" placeholder="Seu nome">
-            <button onclick="handleRegister()" style="margin-top:10px;">Entrar</button>
+    <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh; padding: 20px;">
+        <div style="background:var(--card); padding:40px; border-radius:32px; box-shadow:var(--shadow); width:100%; max-width:400px; text-align:center; border: 1px solid var(--border);">
+            <div style="width: 60px; height: 60px; background: var(--primary); border-radius: 18px; margin: 0 auto 20px; display: flex; align-items:center; justify-content:center; color:white; font-size: 1.5rem; font-weight:800;">R</div>
+            <h1 style="margin:0; font-weight:800; letter-spacing: -1px;">ReSolution Flow</h1>
+            <p style="color:var(--text-muted); margin: 10px 0 30px;">Domine sua rotina com clareza.</p>
+            <input type="text" id="reg-user" placeholder="Como devemos te chamar?">
+            <button class="btn-main" onclick="handleRegister()" style="width:100%">Começar Jornada</button>
         </div>
     </div>
 
     <div id="app-content" class="hidden">
-        <div class="navbar-container">
-            <nav class="navbar">
-                <div class="logo">ReSolution Flow</div>
-                <div class="user-section" onclick="toggleDropdown(event)">
+        <div class="nav-wrapper">
+            <nav class="nav">
+                <div class="logo">ReSolution</div>
+                <div class="user-trigger" onclick="toggleDropdown(event)">
                     <span id="user-name-display" style="font-weight:600; font-size:0.9rem;">Usuário</span>
                     <div class="user-photo" id="user-photo-nav">U</div>
-                    <div id="user-dropdown" class="dropdown-menu hidden">
+                    <div id="user-dropdown" class="dropdown hidden">
                         <div onclick="openProfileModal()">👤 Perfil</div>
-                        <div onclick="toggleDarkMode()">🌓 Modo Escuro</div>
-                        <div onclick="resetApp()" style="color:var(--error)">🗑️ Reiniciar</div>
+                        <div onclick="toggleDarkMode()">🌓 Alternar Tema</div>
+                        <div onclick="resetApp()" style="color:#f43f5e">🗑️ Resetar Tudo</div>
                     </div>
                 </div>
             </nav>
         </div>
 
-        <div class="date-navigator">
-            <div class="date-btn" onclick="changeDay(-1)">◀</div>
-            <input type="date" id="current-day-selector" class="date-input" onchange="updateDashboard()">
-            <div class="date-btn" onclick="changeDay(1)">▶</div>
+        <div class="date-container">
+            <button class="date-btn" onclick="changeDay(-1)">←</button>
+            <div class="date-display">
+                <input type="date" id="current-day-selector" class="date-input-hidden" onchange="updateDashboard()">
+            </div>
+            <button class="date-btn" onclick="changeDay(1)">→</button>
         </div>
 
-        <main class="main-container">
-            <div class="summary-card">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-weight:700; font-size:0.8rem; color:var(--text-secondary); text-transform: uppercase;">Progresso</span>
-                    <button onclick="openObjModal()" style="width:auto; padding:8px 18px; border-radius:12px; font-size:0.8rem;">+ Meta</button>
+        <main class="main">
+            <div class="stats-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <span style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Progresso de Hoje</span>
+                        <div id="progress-percent" style="font-size:2.5rem; font-weight:800; margin-top:5px;">0%</div>
+                    </div>
+                    <button class="btn-main" onclick="openObjModal()" style="padding: 10px 20px; font-size: 0.85rem;">+ Nova Meta</button>
                 </div>
-                <div id="progress-percent" style="font-size:2.2rem; font-weight:800; margin-top:5px;">0%</div>
-                <div class="progress-bar"><div id="fill" class="progress-fill"></div></div>
+                <div class="progress-container">
+                    <div class="progress-bar"><div id="fill" class="progress-fill" style="width: 0%"></div></div>
+                </div>
             </div>
 
-            <div class="spreadsheet-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width:60px">OK</th>
-                            <th>Tarefa</th>
-                            <th style="width:40px"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="obj-table-body"></tbody>
-                </table>
-            </div>
+            <div class="tasks-wrapper" id="obj-list-container">
+                </div>
         </main>
     </div>
 
     <div id="obj-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="margin:0 0 20px; font-size: 1.2rem;">Nova Meta</h2>
-            <input type="text" id="new-obj-desc" placeholder="O que vamos realizar hoje?">
-            <button onclick="saveObjective()" style="margin-top:10px;">Salvar Meta</button>
-            <button onclick="closeModals()" style="background:transparent; color:var(--text-secondary); margin-top:10px; box-shadow:none;">Cancelar</button>
+            <h2 style="margin:0 0 10px; font-size: 1.5rem; font-weight: 800;">O que planeja fazer?</h2>
+            <p style="color:var(--text-muted); margin-bottom:25px;">Defina uma meta clara para o seu dia.</p>
+            <input type="text" id="new-obj-desc" placeholder="Ex: Finalizar projeto X..." autofocus>
+            <button class="btn-main" onclick="saveObjective()" style="width:100%">Adicionar à Lista</button>
+            <button onclick="closeModals()" style="width:100%; background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; font-weight:600;">Agora não</button>
         </div>
     </div>
 
     <div id="profile-modal" class="modal hidden">
         <div class="modal-content" style="text-align:center;">
-            <h2 style="margin-top:0; font-size: 1.2rem;">Meu Perfil</h2>
-            <div class="profile-upload-box" onclick="document.getElementById('file-input').click()">
-                <div id="modal-photo-preview" style="font-size:0.8rem; color:var(--text-secondary);">Alterar Foto</div>
+            <h2 style="margin-bottom:25px;">Configurações</h2>
+            <div onclick="document.getElementById('file-input').click()" style="width:90px; height:90px; border-radius:24px; background:var(--input-bg); margin:0 auto 20px; display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; border:2px dashed var(--primary);">
+                <div id="modal-photo-preview" style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">FOTO</div>
             </div>
             <input type="file" id="file-input" class="hidden" accept="image/*" onchange="previewImage(this)">
-            <input type="text" id="edit-name" placeholder="Nome">
-            <button onclick="saveProfile()" style="margin-top:10px;">Atualizar Nome</button>
-            <button onclick="closeModals()" style="background:transparent; color:var(--text-secondary); margin-top:10px; box-shadow:none;">Voltar</button>
+            <input type="text" id="edit-name" placeholder="Seu Nome">
+            <button class="btn-main" onclick="saveProfile()" style="width:100%">Salvar Alterações</button>
+            <button onclick="closeModals()" style="width:100%; background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer;">Fechar</button>
         </div>
     </div>
 
     <script>
-        let userData = JSON.parse(localStorage.getItem('res_flow_data_v3'));
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+
+        let userData = JSON.parse(localStorage.getItem('res_flow_v5')) || null;
 
         window.onload = () => {
-            if (localStorage.getItem('res_flow_dark') === 'true') document.body.classList.add('dark-mode');
-            if (userData) {
-                showApp();
-            }
+            if (localStorage.getItem('res_dark') === 'true') document.body.classList.add('dark-mode');
+            if (userData) showApp();
             document.getElementById('current-day-selector').valueAsDate = new Date();
         };
 
         function handleRegister() {
-            const name = document.getElementById('reg-user').value;
-            if(!name) return alert("Por favor, digite seu nome.");
+            const name = document.getElementById('reg-user').value.trim();
+            if(!name) return;
             userData = { name, photo: null, objectives: [] };
-            save(); 
-            showApp();
+            save(); showApp();
         }
 
         function showApp() {
@@ -267,72 +244,63 @@
         }
 
         function updateDashboard() {
+            if(!userData) return;
             const date = document.getElementById('current-day-selector').value;
             document.getElementById('user-name-display').innerText = userData.name;
             const photoNav = document.getElementById('user-photo-nav');
-            
-            if(userData.photo) {
-                photoNav.innerHTML = `<img src="${userData.photo}">`;
-            } else {
-                photoNav.innerHTML = userData.name.charAt(0).toUpperCase();
-            }
+            photoNav.innerHTML = userData.photo ? `<img src="${userData.photo}">` : userData.name.charAt(0).toUpperCase();
 
             const daily = userData.objectives.filter(o => o.date === date);
             renderList(daily);
-            updateProg(daily);
+            const perc = daily.length > 0 ? Math.round((daily.filter(o => o.done).length / daily.length) * 100) : 0;
+            document.getElementById('fill').style.width = perc + '%';
+            document.getElementById('progress-percent').innerText = perc + '%';
         }
 
         function renderList(list) {
-            const body = document.getElementById('obj-table-body');
-            body.innerHTML = list.length ? '' : '<tr><td colspan="3" style="text-align:center; padding:40px; color:var(--text-secondary); font-size:0.9rem;">Nenhuma meta para hoje.</td></tr>';
+            const container = document.getElementById('obj-list-container');
+            container.innerHTML = list.length ? '' : '<div style="padding:60px; text-align:center; color:var(--text-muted);">Sua lista está vazia para este dia.</div>';
             
             list.forEach(o => {
-                const idx = userData.objectives.indexOf(o);
-                body.innerHTML += `
-                    <tr>
-                        <td style="text-align:center"><input type="checkbox" ${o.done ? 'checked' : ''} onchange="toggle(${idx})" style="width:20px; height:20px; accent-color:var(--primary); cursor:pointer;"></td>
-                        <td style="${o.done ? 'text-decoration:line-through; opacity:0.5' : ''}">${o.desc}</td>
-                        <td style="text-align:right"><button onclick="del(${idx})" style="background:none; border:none; color:var(--error); cursor:pointer; width:auto; padding:0; box-shadow:none; font-size:1.2rem;">✕</button></td>
-                    </tr>
+                const realIdx = userData.objectives.findIndex(item => item === o);
+                const row = document.createElement('div');
+                row.className = 'task-row';
+                row.innerHTML = `
+                    <div class="check-container">
+                        <input type="checkbox" ${o.done ? 'checked' : ''} onchange="toggle(${realIdx})">
+                    </div>
+                    <div class="task-text ${o.done ? 'task-done' : ''}">${o.desc}</div>
+                    <button class="btn-delete" onclick="del(${realIdx})">✕</button>
                 `;
+                container.appendChild(row);
             });
         }
 
-        function updateProg(list) {
-            const p = list.length > 0 ? Math.round((list.filter(o => o.done).length / list.length) * 100) : 0;
-            document.getElementById('fill').style.width = p + '%';
-            document.getElementById('progress-percent').innerText = p + '%';
-        }
-
         function saveObjective() {
-            const desc = document.getElementById('new-obj-desc').value;
+            const desc = document.getElementById('new-obj-desc').value.trim();
             const date = document.getElementById('current-day-selector').value;
             if(!desc) return;
             userData.objectives.push({ desc, date, done: false });
-            save(); 
-            updateDashboard(); 
-            closeModals();
+            save(); updateDashboard(); closeModals();
             document.getElementById('new-obj-desc').value = '';
         }
 
         function previewImage(input) {
-            const file = input.files[0];
-            if (file) {
+            if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = e => {
-                    document.getElementById('modal-photo-preview').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover">`;
+                    document.getElementById('modal-photo-preview').innerHTML = `<img src="${e.target.result}">`;
                     userData.photo = e.target.result;
                     save();
                 };
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
         function toggle(i) { userData.objectives[i].done = !userData.objectives[i].done; save(); updateDashboard(); }
-        function del(i) { if(confirm("Deseja remover esta meta?")) { userData.objectives.splice(i, 1); save(); updateDashboard(); } }
+        function del(i) { userData.objectives.splice(i, 1); save(); updateDashboard(); }
         function saveProfile() { userData.name = document.getElementById('edit-name').value; save(); updateDashboard(); closeModals(); }
-        function save() { localStorage.setItem('res_flow_data_v3', JSON.stringify(userData)); }
-        
+        function save() { localStorage.setItem('res_flow_v5', JSON.stringify(userData)); }
         function changeDay(d) {
             let s = document.getElementById('current-day-selector');
             let dt = new Date(s.value + 'T00:00:00');
@@ -340,17 +308,15 @@
             s.valueAsDate = dt;
             updateDashboard();
         }
-
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('res_flow_dark', isDark);
+            localStorage.setItem('res_dark', isDark);
         }
-
-        function resetApp() { if(confirm("Isso apagará todos os seus dados. Continuar?")) { localStorage.clear(); location.reload(); } }
-        function openObjModal() { document.getElementById('obj-modal').classList.remove('hidden'); }
+        function resetApp() { if(confirm("Apagar todos os dados?")) { localStorage.clear(); location.reload(); } }
+        function openObjModal() { document.getElementById('obj-modal').classList.remove('hidden'); document.getElementById('new-obj-desc').focus(); }
         function openProfileModal() { 
             document.getElementById('edit-name').value = userData.name;
-            if(userData.photo) document.getElementById('modal-photo-preview').innerHTML = `<img src="${userData.photo}" style="width:100%; height:100%; object-fit:cover">`;
+            if(userData.photo) document.getElementById('modal-photo-preview').innerHTML = `<img src="${userData.photo}">`;
             document.getElementById('profile-modal').classList.remove('hidden'); 
         }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
