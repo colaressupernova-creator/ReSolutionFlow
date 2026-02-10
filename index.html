@@ -37,120 +37,81 @@
             --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
         }
 
-        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; transition: all 0.2s ease; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); 
-            margin: 0; 
-            color: var(--text-main); 
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
+            background: var(--bg); margin: 0; color: var(--text-main); 
+            min-height: 100vh; overflow-x: hidden;
         }
         .hidden { display: none !important; }
 
         /* --- NAVBAR --- */
         .nav-wrapper { padding: 16px 5%; position: sticky; top: 0; z-index: 1000; }
         .nav {
-            background: rgba(var(--card), 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 10px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 10px 24px;
+            display: flex; justify-content: space-between; align-items: center;
             box-shadow: var(--shadow);
         }
-        .logo { font-weight: 800; font-size: 1.25rem; background: linear-gradient(90deg, #0062ff, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--primary); }
 
-        .user-trigger { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 4px 4px 12px; border-radius: 50px; border: 1px solid transparent; }
-        .user-trigger:hover { background: var(--input-bg); border-color: var(--border); }
+        .user-trigger { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
         .user-photo { width: 36px; height: 36px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; overflow: hidden; }
         .user-photo img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- DATE SELECTOR (Centralized) --- */
-        .date-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 30px 0; }
+        /* --- DATE SELECTOR (CENTRALIZADO) --- */
+        .date-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 30px 0; }
         .date-btn {
             background: var(--card); border: 1px solid var(--border); color: var(--text-main);
             width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; box-shadow: var(--shadow); font-size: 0.9rem;
+            cursor: pointer; box-shadow: var(--shadow);
         }
-        .date-btn:hover { transform: scale(1.05); background: var(--primary); color: white; border-color: var(--primary); }
         .date-display {
-            background: var(--card); border: 1px solid var(--border); border-radius: 50px;
-            padding: 10px 24px; font-weight: 700; font-size: 1rem; color: var(--text-main);
-            display: flex; align-items: center; box-shadow: var(--shadow); cursor: pointer;
+            background: transparent; border: none; font-weight: 700; font-size: 1.1rem;
+            color: var(--text-main); text-align: center; width: 160px; outline: none; cursor: pointer;
         }
-        .date-input-hidden { border: none; background: transparent; color: inherit; font: inherit; outline: none; text-align: center; cursor: pointer; }
 
-        /* --- MAIN DASHBOARD --- */
+        /* --- DASHBOARD --- */
         .main { max-width: 700px; margin: 0 auto; padding: 0 20px 60px; }
         .stats-card { 
             background: var(--card); border-radius: var(--radius-lg); padding: 30px;
             border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 30px;
-            position: relative; overflow: hidden;
         }
-        .stats-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
-        
-        .progress-container { margin-top: 20px; }
-        .progress-bar { background: var(--input-bg); border-radius: 100px; height: 12px; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, var(--primary), #6366f1); height: 100%; border-radius: 100px; }
+        .progress-bar { background: var(--input-bg); border-radius: 100px; height: 12px; overflow: hidden; margin-top: 15px; }
+        .progress-fill { background: var(--primary); height: 100%; border-radius: 100px; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .btn-main {
-            background: var(--primary); color: white; border: none; padding: 14px 28px;
-            border-radius: var(--radius-md); font-weight: 700; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 98, 255, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--primary); color: white; border: none; padding: 14px 24px;
+            border-radius: var(--radius-md); font-weight: 700; cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 98, 255, 0.3);
         }
-        .btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-        /* --- LIST TABLE --- */
+        /* --- LISTA --- */
         .tasks-wrapper { background: var(--card); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
-        .task-row { 
-            display: flex; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border);
-            animation: slideIn 0.3s ease-out;
-        }
+        .task-row { display: flex; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); }
         .task-row:last-child { border-bottom: none; }
-        .task-row:hover { background: rgba(0, 98, 255, 0.02); }
-        
-        .check-container { margin-right: 18px; position: relative; width: 24px; height: 24px; }
-        input[type="checkbox"] { 
-            appearance: none; width: 24px; height: 24px; border: 2px solid var(--border); 
-            border-radius: 8px; cursor: pointer; position: relative;
-        }
-        input[type="checkbox"]:checked { background: var(--primary); border-color: var(--primary); }
-        input[type="checkbox"]:checked::after { content: '✓'; position: absolute; color: white; font-size: 14px; left: 5px; top: 1px; }
-
-        .task-text { flex: 1; font-weight: 500; font-size: 1rem; }
+        .task-text { flex: 1; font-weight: 500; }
         .task-done { text-decoration: line-through; opacity: 0.4; }
-        .btn-delete { color: #f43f5e; background: none; border: none; cursor: pointer; font-size: 1.2rem; padding: 5px; opacity: 0; }
-        .task-row:hover .btn-delete { opacity: 1; }
 
         /* --- MODAIS --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--card); padding: 32px; border-radius: var(--radius-lg); width: 100%; max-width: 440px; border: 1px solid var(--border); animation: modalUp 0.3s ease-out; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: var(--card); padding: 30px; border-radius: var(--radius-lg); width: 100%; max-width: 400px; border: 1px solid var(--border); }
+        
+        input[type="text"] { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); margin-bottom: 15px; font-size: 1rem; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        /* Menu */
-        .dropdown { position: absolute; top: 60px; right: 0; background: var(--card); border-radius: var(--radius-md); width: 200px; border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
-        .dropdown div { padding: 14px 20px; font-size: 0.95rem; cursor: pointer; }
-        .dropdown div:hover { background: var(--input-bg); color: var(--primary); }
-
-        input[type="text"] { width: 100%; padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 20px; }
+        .dropdown { position: absolute; top: 55px; right: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); width: 180px; box-shadow: var(--shadow); overflow: hidden; z-index: 10; }
+        .dropdown div { padding: 12px 20px; cursor: pointer; font-size: 0.9rem; }
+        .dropdown div:hover { background: var(--input-bg); }
     </style>
 </head>
-    
 <body onclick="closeDropdown()">
 
-    <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh; padding: 20px;">
-        <div style="background:var(--card); padding:40px; border-radius:32px; box-shadow:var(--shadow); width:100%; max-width:400px; text-align:center; border: 1px solid var(--border);">
-            <div style="width: 60px; height: 60px; background: var(--primary); border-radius: 18px; margin: 0 auto 20px; display: flex; align-items:center; justify-content:center; color:white; font-size: 1.5rem; font-weight:800;">R</div>
-            <h1 style="margin:0; font-weight:800; letter-spacing: -1px;">ReSolution Flow</h1>
-            <p style="color:var(--text-muted); margin: 10px 0 30px;">Domine sua rotina com clareza.</p>
-            <input type="text" id="reg-user" placeholder="Como devemos te chamar?">
-            <button class="btn-main" onclick="handleRegister()" style="width:100%">Começar Jornada</button>
+    <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh;">
+        <div style="background:var(--card); padding:40px; border-radius:32px; box-shadow:var(--shadow); width:90%; max-width:400px; text-align:center; border: 1px solid var(--border);">
+            <h1 style="margin:0; font-weight:800; color: var(--primary);">ReSolution</h1>
+            <p style="color:var(--text-muted); margin-bottom:30px;">Flow de produtividade</p>
+            <input type="text" id="reg-user" placeholder="Seu nome">
+            <button class="btn-main" onclick="handleRegister()" style="width:100%">Entrar</button>
         </div>
     </div>
 
@@ -159,12 +120,12 @@
             <nav class="nav">
                 <div class="logo">ReSolution</div>
                 <div class="user-trigger" onclick="toggleDropdown(event)">
-                    <span id="user-name-display" style="font-weight:600; font-size:0.9rem;">Usuário</span>
+                    <span id="user-name-display" style="font-weight:600;">Usuário</span>
                     <div class="user-photo" id="user-photo-nav">U</div>
                     <div id="user-dropdown" class="dropdown hidden">
                         <div onclick="openProfileModal()">👤 Perfil</div>
-                        <div onclick="toggleDarkMode()">🌓 Alternar Tema</div>
-                        <div onclick="resetApp()" style="color:#f43f5e">🗑️ Resetar Tudo</div>
+                        <div onclick="toggleDarkMode()">🌓 Tema</div>
+                        <div onclick="resetApp()" style="color:#f43f5e">🗑️ Resetar</div>
                     </div>
                 </div>
             </nav>
@@ -172,70 +133,68 @@
 
         <div class="date-container">
             <button class="date-btn" onclick="changeDay(-1)">←</button>
-            <div class="date-display">
-                <input type="date" id="current-day-selector" class="date-input-hidden" onchange="updateDashboard()">
-            </div>
+            <input type="date" id="current-day-selector" class="date-display" onchange="updateDashboard()">
             <button class="date-btn" onclick="changeDay(1)">→</button>
         </div>
 
         <main class="main">
             <div class="stats-card">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <span style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Progresso de Hoje</span>
-                        <div id="progress-percent" style="font-size:2.5rem; font-weight:800; margin-top:5px;">0%</div>
-                    </div>
-                    <button class="btn-main" onclick="openObjModal()" style="padding: 10px 20px; font-size: 0.85rem;">+ Nova Meta</button>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div id="progress-percent" style="font-size:2.2rem; font-weight:800;">0%</div>
+                    <button class="btn-main" onclick="openObjModal()">+ Meta</button>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar"><div id="fill" class="progress-fill" style="width: 0%"></div></div>
-                </div>
+                <div class="progress-bar"><div id="fill" class="progress-fill"></div></div>
             </div>
-
-            <div class="tasks-wrapper" id="obj-list-container">
-                </div>
+            <div class="tasks-wrapper" id="obj-list"></div>
         </main>
     </div>
 
     <div id="obj-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="margin:0 0 10px; font-size: 1.5rem; font-weight: 800;">O que planeja fazer?</h2>
-            <p style="color:var(--text-muted); margin-bottom:25px;">Defina uma meta clara para o seu dia.</p>
-            <input type="text" id="new-obj-desc" placeholder="Ex: Finalizar projeto X..." autofocus>
-            <button class="btn-main" onclick="saveObjective()" style="width:100%">Adicionar à Lista</button>
-            <button onclick="closeModals()" style="width:100%; background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; font-weight:600;">Agora não</button>
+            <h3>Nova Meta</h3>
+            <input type="text" id="new-obj-desc" placeholder="O que vamos fazer?">
+            <button class="btn-main" onclick="saveObjective()" style="width:100%">Salvar</button>
+            <button onclick="closeModals()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer; color:var(--text-muted);">Cancelar</button>
         </div>
     </div>
 
     <div id="profile-modal" class="modal hidden">
         <div class="modal-content" style="text-align:center;">
-            <h2 style="margin-bottom:25px;">Configurações</h2>
-            <div onclick="document.getElementById('file-input').click()" style="width:90px; height:90px; border-radius:24px; background:var(--input-bg); margin:0 auto 20px; display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; border:2px dashed var(--primary);">
-                <div id="modal-photo-preview" style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">FOTO</div>
+            <h3>Perfil</h3>
+            <div onclick="document.getElementById('file-input').click()" style="width:80px; height:80px; border-radius:20px; background:var(--input-bg); margin:0 auto 20px; display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; border:2px dashed var(--primary);">
+                <div id="modal-photo-preview" style="font-size:0.7rem; color:var(--text-muted);">FOTO</div>
             </div>
             <input type="file" id="file-input" class="hidden" accept="image/*" onchange="previewImage(this)">
-            <input type="text" id="edit-name" placeholder="Seu Nome">
-            <button class="btn-main" onclick="saveProfile()" style="width:100%">Salvar Alterações</button>
-            <button onclick="closeModals()" style="width:100%; background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer;">Fechar</button>
+            <input type="text" id="edit-name" placeholder="Seu nome">
+            <button class="btn-main" onclick="saveProfile()" style="width:100%">Atualizar</button>
+            <button onclick="closeModals()" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer;">Fechar</button>
         </div>
     </div>
 
-    <script>
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        let userData = JSON.parse(localStorage.getItem('res_flow_v5')) || null;
+    <script>
+        // CONFIGURAÇÕES INICIAIS
+        const DB_KEY = 'res_flow_v6';
+        let userData = JSON.parse(localStorage.getItem(DB_KEY)) || null;
 
         window.onload = () => {
             if (localStorage.getItem('res_dark') === 'true') document.body.classList.add('dark-mode');
-            if (userData) showApp();
-            document.getElementById('current-day-selector').valueAsDate = new Date();
+            const dateInput = document.getElementById('current-day-selector');
+            dateInput.valueAsDate = new Date();
+            
+            if (userData && userData.name) {
+                showApp();
+            }
         };
 
+        // AUTH
         function handleRegister() {
             const name = document.getElementById('reg-user').value.trim();
-            if(!name) return;
+            if (!name) return alert("Digite seu nome.");
             userData = { name, photo: null, objectives: [] };
-            save(); showApp();
+            save();
+            showApp();
         }
 
         function showApp() {
@@ -244,8 +203,9 @@
             updateDashboard();
         }
 
+        // CORE
         function updateDashboard() {
-            if(!userData) return;
+            if (!userData) return;
             const date = document.getElementById('current-day-selector').value;
             document.getElementById('user-name-display').innerText = userData.name;
             const photoNav = document.getElementById('user-photo-nav');
@@ -253,91 +213,100 @@
 
             const daily = userData.objectives.filter(o => o.date === date);
             renderList(daily);
+
             const perc = daily.length > 0 ? Math.round((daily.filter(o => o.done).length / daily.length) * 100) : 0;
             document.getElementById('fill').style.width = perc + '%';
             document.getElementById('progress-percent').innerText = perc + '%';
+            
+            if (perc === 100 && daily.length > 0) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#0062ff', '#6366f1'] });
+            }
         }
 
         function renderList(list) {
-            const container = document.getElementById('obj-list-container');
-            container.innerHTML = list.length ? '' : '<div style="padding:60px; text-align:center; color:var(--text-muted);">Sua lista está vazia para este dia.</div>';
+            const container = document.getElementById('obj-list');
+            container.innerHTML = list.length ? '' : '<div style="padding:40px; text-align:center; color:var(--text-muted);">Nada planejado.</div>';
             
             list.forEach(o => {
                 const realIdx = userData.objectives.findIndex(item => item === o);
                 const row = document.createElement('div');
                 row.className = 'task-row';
                 row.innerHTML = `
-                    <div class="check-container">
-                        <input type="checkbox" ${o.done ? 'checked' : ''} onchange="toggle(${realIdx})">
-                    </div>
+                    <input type="checkbox" ${o.done ? 'checked' : ''} onchange="toggle(${realIdx})" style="width:22px; height:22px; margin-right:15px; accent-color:var(--primary); cursor:pointer;">
                     <div class="task-text ${o.done ? 'task-done' : ''}">${o.desc}</div>
-                    <button class="btn-delete" onclick="del(${realIdx})">✕</button>
+                    <span onclick="del(${realIdx})" style="color:#f43f5e; cursor:pointer; font-weight:bold; margin-left:10px;">✕</span>
                 `;
                 container.appendChild(row);
             });
         }
 
+        // AÇÕES
         function saveObjective() {
             const desc = document.getElementById('new-obj-desc').value.trim();
             const date = document.getElementById('current-day-selector').value;
-            if(!desc) return;
+            if (!desc) return;
             userData.objectives.push({ desc, date, done: false });
             save(); updateDashboard(); closeModals();
             document.getElementById('new-obj-desc').value = '';
+        }
+
+        function toggle(i) {
+            userData.objectives[i].done = !userData.objectives[i].done;
+            if (userData.objectives[i].done && "vibrate" in navigator) navigator.vibrate(40);
+            save(); updateDashboard();
+        }
+
+        function del(i) {
+            if(confirm("Remover meta?")) { userData.objectives.splice(i, 1); save(); updateDashboard(); }
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('edit-name').value.trim();
+            if (name) {
+                userData.name = name;
+                save(); updateDashboard(); closeModals();
+            }
         }
 
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = e => {
-                    document.getElementById('modal-photo-preview').innerHTML = `<img src="${e.target.result}">`;
                     userData.photo = e.target.result;
-                    save();
+                    document.getElementById('modal-photo-preview').innerHTML = `<img src="${userData.photo}" style="width:100%; height:100%; object-fit:cover">`;
+                    save(); updateDashboard();
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function toggle(i) { userData.objectives[i].done = !userData.objectives[i].done; save(); updateDashboard(); }
-        function del(i) { userData.objectives.splice(i, 1); save(); updateDashboard(); }
-        function saveProfile() { userData.name = document.getElementById('edit-name').value; save(); updateDashboard(); closeModals(); }
-        function save() { localStorage.setItem('res_flow_v5', JSON.stringify(userData)); }
+        // AUXILIARES
+        function save() { localStorage.setItem(DB_KEY, JSON.stringify(userData)); }
+        
         function changeDay(d) {
-            let s = document.getElementById('current-day-selector');
-            let dt = new Date(s.value + 'T00:00:00');
+            const s = document.getElementById('current-day-selector');
+            const dt = new Date(s.value + 'T00:00:00');
             dt.setDate(dt.getDate() + d);
             s.valueAsDate = dt;
             updateDashboard();
         }
+
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('res_dark', isDark);
         }
-        function resetApp() { if(confirm("Apagar todos os dados?")) { localStorage.clear(); location.reload(); } }
-        function openObjModal() { document.getElementById('obj-modal').classList.remove('hidden'); document.getElementById('new-obj-desc').focus(); }
+
+        function resetApp() { if(confirm("Apagar todos os dados permanentemente?")) { localStorage.clear(); location.reload(); } }
+        function openObjModal() { document.getElementById('obj-modal').classList.remove('hidden'); }
         function openProfileModal() { 
             document.getElementById('edit-name').value = userData.name;
-            if(userData.photo) document.getElementById('modal-photo-preview').innerHTML = `<img src="${userData.photo}">`;
             document.getElementById('profile-modal').classList.remove('hidden'); 
         }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
         function toggleDropdown(e) { e.stopPropagation(); document.getElementById('user-dropdown').classList.toggle('hidden'); }
         function closeDropdown() { document.getElementById('user-dropdown').classList.add('hidden'); }
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-<script>
-// No seu script atual, dentro da função updateDashboard ou updateProg:
-function checarVitoria(porcentagem) {
-    if (porcentagem === 100) {
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#0062ff', '#6366f1', '#10b981']
-        });
-    }
-}
-</script>
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(() => console.log("SW Registered"));
     </script>
 </body>
 </html>
