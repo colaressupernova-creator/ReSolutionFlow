@@ -141,6 +141,7 @@
         input[type="text"] { width: 100%; padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 20px; }
     </style>
 </head>
+    
 <body onclick="closeDropdown()">
 
     <div id="auth-screen" style="display:flex; justify-content:center; align-items:center; height:100vh; padding: 20px;">
@@ -322,6 +323,21 @@
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
         function toggleDropdown(e) { e.stopPropagation(); document.getElementById('user-dropdown').classList.toggle('hidden'); }
         function closeDropdown() { document.getElementById('user-dropdown').classList.add('hidden'); }
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+// No seu script atual, dentro da função updateDashboard ou updateProg:
+function checarVitoria(porcentagem) {
+    if (porcentagem === 100) {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#0062ff', '#6366f1', '#10b981']
+        });
+    }
+}
+</script>
     </script>
 </body>
 </html>
